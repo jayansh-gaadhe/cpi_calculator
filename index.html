@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPI Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            width: 90%;
+            max-width: 400px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .output {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e7f3e7;
+            border: 1px solid #4CAF50;
+            border-radius: 5px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>CPI Calculator</h2>
+        <label for="sts">STS Pointers</label>
+        <input type="number" id="sts" placeholder="Enter value" onkeydown="focusNext(event, 'daa')">
+
+        <label for="daa">DAA Pointers</label>
+        <input type="number" id="daa" placeholder="Enter value" onkeydown="focusNext(event, 'la')">
+
+        <label for="la">LA Pointers</label>
+        <input type="number" id="la" placeholder="Enter value" onkeydown="focusNext(event, 'csp')">
+
+        <label for="csp">CSP Pointers</label>
+        <input type="number" id="csp" placeholder="Enter value" onkeydown="focusNext(event, 'ct')">
+
+        <label for="ct">Expected CT Pointers</label>
+        <input type="number" id="ct" placeholder="Enter value" onkeydown="focusNext(event, 'cpi')">
+
+        <label for="cpi">Current CPI</label>
+        <input type="number" id="cpi" placeholder="Enter value" onkeydown="focusNext(event, 'calculate')">
+
+        <button id="calculate" onclick="calculateCPI()">Calculate</button>
+
+        <div id="output" class="output" style="display: none;"></div>
+    </div>
+
+    <script>
+        function calculateCPI() {
+            const a = parseFloat(document.getElementById('sts').value) || 0;
+            const b = parseFloat(document.getElementById('daa').value) || 0;
+            const c = parseFloat(document.getElementById('la').value) || 0;
+            const d = parseFloat(document.getElementById('csp').value) || 0;
+            const e = parseFloat(document.getElementById('ct').value) || 0;
+            const x = parseFloat(document.getElementById('cpi').value) || 0;
+
+            const cpi = (x * 37 + a*3 + b*4 + c*4 + d*4 + e*4) / 56;
+            const spi = (a*3 + b*4 + c*4 + d*4 + e*4) / 19;
+
+            const outputDiv = document.getElementById('output');
+            outputDiv.style.display = 'block';
+            outputDiv.innerHTML = `CPI: ${cpi.toFixed(2)}<br>SPI: ${spi.toFixed(2)}`;
+        }
+
+        function focusNext(event, nextElementId) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                const nextElement = document.getElementById(nextElementId);
+                if (nextElement) {
+                    nextElement.focus();
+                }
+            }
+        }
+    </script>
+</body>
+</html>
